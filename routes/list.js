@@ -102,7 +102,9 @@ async function listImport(req, listName, listId) {
     const https = axios.create();
     https.defaults.timeout = 10000; // TODO maybe move to env?
     https.defaults.timeoutErrorMessage = "ehsan.lol took too long to respond...";
-    const urlResponse = await https.get('https://ehsan.lol/' + listId + '/raw'); // use raw so that we don't get HTML potentially
+    // use `/raw` endpoint to now get HTML and use `locale=en-us` to translate to English.
+    const requestUrl = 'https://ehsan.lol/' + listId + '/raw?locale=en-us'
+    const urlResponse = await https.get(requestUrl);
 
     // Split up the reply and
     const rawEntityList = urlResponse.data.trim().split('\n');
